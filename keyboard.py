@@ -15,8 +15,6 @@ class Keyboard(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
 
-
-    def keys(self):
         self.output_label = tk.Label(self)
         self.output_label.grid(row=0, columnspan=10)
 
@@ -105,7 +103,7 @@ class Keyboard(tk.Frame):
         self.output_label.config(text="You pressed "+letter)
         self.master.method(letter) # send the data back to the master class
 
-    
+
     def hint(self, word):
         # Hard code word in for testing
         msg = master_dict[word]
@@ -121,7 +119,7 @@ class Keyboard(tk.Frame):
         button_close = ttk.Button(popup, text="Close",command=popup.destroy)
         # ttk.Style().configure("TButton", padding=6, relief="flat", background="#ccc")
         # button_close.pack()
-    
+
 
 
 # if __name__=="__main__":

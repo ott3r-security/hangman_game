@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import tkinter as tk
 from word_dicts import easy_list, hard_list, master_dict
 from tkinter import ttk
@@ -9,26 +11,18 @@ class MainApp(tk.Tk):
 
     def __init__(self):
         tk.Tk.__init__(self)
-        self.frame = ChooseDifficulty(self) 
+        self.frame = ChooseDifficulty(self)
         self.frame.pack()
-    
 
     def change(self, frame):
-        self.frame.pack_forget() 
+        self.frame.pack_forget()
         self.frame = frame(self)
         self.frame.pack()
 
 
-    def method(self, value):
-        print("MainApp method called with value", value)
- 
-        return value
-        
-
-
 
 class ChooseDifficulty(tk.Frame):
-    # First window. Choose easy or hard. 
+    # First window. Choose easy or hard.
     def __init__(self, master=None, word='', *args, **kwargs):
         ChooseDifficulty.word = word
         tk.Frame.__init__(self, master, **kwargs)
@@ -59,23 +53,23 @@ class ChooseDifficulty(tk.Frame):
         elif diff == 'hard':
             ChooseDifficulty.word = random.choice(hard_list)
             return self.master.change(SecondFrame), ChooseDifficulty.word
-  
 
 
 
-class SecondFrame(ChooseDifficulty, Keyboard, tk.Frame):
+
+class SecondFrame(tk.Frame):
 
     def __init__(self, master=None, **kwargs):
 
         tk.Frame.__init__(self, master, **kwargs)
-    
+
         master.title("Hangman")
         master.geometry("1000x800")
-        master.resizable(False, False)
+        # ~ master.resizable(False, False)
 
         self.score = 7
         self.display = list(len(ChooseDifficulty.word) * '_')
-    
+
 
         # Place the hangman
         # TODO
@@ -91,7 +85,14 @@ class SecondFrame(ChooseDifficulty, Keyboard, tk.Frame):
         word_box.place(relx=0.5, y=700, anchor='n')
 
         # Display the keyboard
-        keyboard = Keyboard.keys(self)
+        keyboard = Keyboard(self)
+        keyboard.pack()
+
+    def method(self, value):
+        print("MainApp method called with value", value)
+
+        return value
+
 
 
 # Game play from tkinter test for later
@@ -116,7 +117,7 @@ class SecondFrame(ChooseDifficulty, Keyboard, tk.Frame):
 #             display[nums] = l
 #             print(display)
 #     return display
-        
+
 
 
 if __name__=="__main__":
