@@ -2,19 +2,21 @@ import tkinter as tk
 from tkinter import ttk
 from word_dicts import master_dict
 
-class MainApp(tk.Tk):
-    def __init__(self):
-        tk.Tk.__init__(self)
-        self.frame = Keyboard(self)
-        self.frame.pack()
-        # Pulls letter from keyboard method
-    def method(self, value):
-        print("MainApp method called with value", value)
+# class MainApp(tk.Tk):
+#     def __init__(self):
+#         tk.Tk.__init__(self)
+#         self.frame = Keyboard(self)
+#         self.frame.pack()
+#         # Pulls letter from keyboard method
+#     def method(self, value):
+#         print("MainApp method called with value", value)
 
 class Keyboard(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
 
+
+    def keys(self):
         self.output_label = tk.Label(self)
         self.output_label.grid(row=0, columnspan=10)
 
@@ -48,7 +50,7 @@ class Keyboard(tk.Frame):
         button11 = ttk.Button(self, text=' P ', command=lambda: self.press('P'))
         button11.grid(row=1, column=9)
 
-        button_hint = ttk.Button(self, text='HINT', command=lambda: self.hint('wizard'))
+        button_hint = ttk.Button(self, text='HINT', command=lambda: self.hint(self.word))
         button_hint.grid(row=1, column=10)
 
         button12 = ttk.Button(self, text=' A ', command=lambda: self.press('A'))
@@ -117,11 +119,11 @@ class Keyboard(tk.Frame):
         label.insert(tk.END, msg)
         label.configure(state='disabled')
         button_close = ttk.Button(popup, text="Close",command=popup.destroy)
-        ttk.Style().configure("TButton", padding=6, relief="flat", background="#ccc")
-        button_close.pack()
+        # ttk.Style().configure("TButton", padding=6, relief="flat", background="#ccc")
+        # button_close.pack()
     
 
 
-if __name__=="__main__":
-    app=MainApp()
-    app.mainloop()
+# if __name__=="__main__":
+#     app=MainApp()
+#     app.mainloop()

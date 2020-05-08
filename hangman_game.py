@@ -2,13 +2,16 @@ import tkinter as tk
 from word_dicts import easy_list, hard_list, master_dict
 from tkinter import ttk
 import random
+from keyboard import Keyboard
 
 
 class MainApp(tk.Tk):
+
     def __init__(self):
         tk.Tk.__init__(self)
         self.frame = ChooseDifficulty(self) 
         self.frame.pack()
+    
 
     def change(self, frame):
         self.frame.pack_forget() 
@@ -16,8 +19,16 @@ class MainApp(tk.Tk):
         self.frame.pack()
 
 
-class ChooseDifficulty(tk.Frame):
+    def method(self, value):
+        print("MainApp method called with value", value)
+ 
+        return value
+        
 
+
+
+class ChooseDifficulty(tk.Frame):
+    # First window. Choose easy or hard. 
     def __init__(self, master=None, word='', *args, **kwargs):
         ChooseDifficulty.word = word
         tk.Frame.__init__(self, master, **kwargs)
@@ -34,6 +45,11 @@ class ChooseDifficulty(tk.Frame):
         btn_quit = ttk.Button(self, text="Quit", command=self.quit)
         btn_quit.pack()
 
+        lbl_g = tk.Label(self, text='Classic Hangman Game')
+        lbl_g.pack()
+        lbl_n = tk.Label(self, text='erok81 2020')
+        lbl_n.pack()
+
 
     def check(self, diff):
 
@@ -47,36 +63,66 @@ class ChooseDifficulty(tk.Frame):
 
 
 
-class SecondFrame(ChooseDifficulty, tk.Frame):
+class SecondFrame(ChooseDifficulty, Keyboard, tk.Frame):
 
     def __init__(self, master=None, **kwargs):
 
         tk.Frame.__init__(self, master, **kwargs)
+    
         master.title("Hangman")
-        master.geometry("800x800")
+        master.geometry("1000x800")
         master.resizable(False, False)
-        
-        # Display word at top for testing
-        lbl = tk.Label(self, text=ChooseDifficulty.word)
-        lbl.pack()
 
         self.score = 7
         self.display = list(len(ChooseDifficulty.word) * '_')
     
 
         # Place the hangman
+        # TODO
 
-        # Place box for keeping track of word
+
+        # Place box for keeping track of word and sample word below
         word_box = tk.Frame(master, height=80, width=600, bd=5, bg='white')
         label = tk.Label(word_box, text=self.display)
         label.config(font=(None, 25))
         label.pack()
-        word_box.place(relx=0.5, y=525, anchor='n')
+        lbl_txt = tk.Label(word_box, text=ChooseDifficulty.word)
+        lbl_txt.pack()
+        word_box.place(relx=0.5, y=700, anchor='n')
 
+        # Display the keyboard
+        keyboard = Keyboard.keys(self)
+
+
+# Game play from tkinter test for later
+# def update_txt(l, t):
+#     global score
+#     global display
+#     # l is letter to find
+#     # t is original text to guess
+#     # i is index list
+#     # d is display word with hidden letters
+#     # s is score which starts at 7
+#     i = [i for i, ltr in enumerate(t) if ltr == l]
+#     if i == []:
+#         score -= 1
+#         # print turle sections here
+#         print('wrong guess')
+#         return score
+#     elif l in display:
+#         print('You\'ve guesed that already')
+#     else:
+#         for nums in i:
+#             display[nums] = l
+#             print(display)
+#     return display
         
-
 
 
 if __name__=="__main__":
     app=MainApp()
     app.mainloop()
+
+
+
+
