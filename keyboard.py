@@ -2,14 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from word_dicts import master_dict
 
-# class MainApp(tk.Tk):
-#     def __init__(self):
-#         tk.Tk.__init__(self)
-#         self.frame = Keyboard(self)
-#         self.frame.pack()
-#         # Pulls letter from keyboard method
-#     def method(self, value):
-#         print("MainApp method called with value", value)
 
 class Keyboard(tk.Frame):
     def __init__(self, master=None, **kwargs):
@@ -48,7 +40,7 @@ class Keyboard(tk.Frame):
         button11 = ttk.Button(self, text=' P ', command=lambda: self.press('P'))
         button11.grid(row=1, column=9)
 
-        button_hint = ttk.Button(self, text='HINT', command=lambda: self.hint(self.word))
+        button_hint = ttk.Button(self, text='HINT', command=lambda: self.hint(master.word))
         button_hint.grid(row=1, column=10)
 
         button12 = ttk.Button(self, text=' A ', command=lambda: self.press('A'))
@@ -93,21 +85,23 @@ class Keyboard(tk.Frame):
         button24 = ttk.Button(self, text=' B ', command=lambda: self.press('B'))
         button24.grid(row=3, column=6)
 
-        button25 = ttk.Button(self, text=' N ', command=lambda: self.press('M'))
+        button25 = ttk.Button(self, text=' N ', command=lambda: self.press('N'))
         button25.grid(row=3, column=7)
 
         button26 = ttk.Button(self, text=' M ', command=lambda: self.press('M'))
         button26.grid(row=3, column=8)
 
     def press(self, letter):
-        self.output_label.config(text="You pressed "+letter)
+        #self.output_label.config(text="You pressed "+letter)
         self.master.method(letter) # send the data back to the master class
 
 
     def hint(self, word):
         # Hard code word in for testing
         msg = master_dict[word]
+ 
         popup = tk.Toplevel()
+        popup.geometry("+%d+%d" % (500, 400))
         popup.geometry('400x300')
         #popup.resizable(False, False)
         popup.wm_title('Word Hint')
@@ -118,10 +112,5 @@ class Keyboard(tk.Frame):
         label.configure(state='disabled')
         button_close = ttk.Button(popup, text="Close",command=popup.destroy)
         # ttk.Style().configure("TButton", padding=6, relief="flat", background="#ccc")
-        # button_close.pack()
+        button_close.pack()
 
-
-
-# if __name__=="__main__":
-#     app=MainApp()
-#     app.mainloop()
